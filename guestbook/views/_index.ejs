@@ -1,15 +1,8 @@
 <% include _header %>
 <h1>Welcome to Learn About Me!</h1>
-<% users.forEach(function(user) { %>
-<div class="panel panel-default">
-<div class="panel-heading">
-<a href="/users/<%= user.username %>">
-<%= user.name() %>
-</a>
-</div>
-<% if (user.bio) { %>
-<div class="panel-body"><%= user.bio %></div>
-<% } %>
-</div>
-<% }) %>
+<h2>need to enable rendering of users in _index2.ejs once users object is retrievable from database</h2>
+<h2>After that, rename _index2.ejs to _index.js</h2>
+
+
+
 <% include _footer %>
