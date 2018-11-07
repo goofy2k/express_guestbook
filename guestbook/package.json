@@ -1,0 +1,19 @@
+{
+  "name": "guestbook",
+  "version": "1.0.0",
+  "description": "Node.js-Express in Action p 45",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "FV",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
+  }
+}
