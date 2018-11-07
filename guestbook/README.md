@@ -16,3 +16,12 @@ Re 1. Git: 	is the config according 'git config --global'  valid for all project
 		can you define different repositories for different projects?
 
 
+Partial answer: explicitely give the name of the right repository when you upload a commit to github with git push
+		So with: git push https://github.com/goofy2k/express_guestbook.git
+
+
+Re 5. 	When you define the folder public as the staticPath, it will be the root for accessing all static content
+	This includes css in the folder public/stylesheets.   You should refer to e.g custom.css   as /stylesheets/custom.css
+	So, without public in front of it.
+
+	Load favicon.ico in /guestbook/public  but refer to it with /favicon.ico.  

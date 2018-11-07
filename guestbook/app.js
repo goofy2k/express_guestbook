@@ -1,7 +1,11 @@
 var http = require("http");
 var path = require("path");
 var express = require("express");
+//staticPath is the root for all static content
+//browser, views etc should refer to / for content in the folder public
+//and to /subfolder for content in the folder public/subfolder etc. etc. 
 var staticPath = path.join(__dirname, "public");
+
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var app = express();
