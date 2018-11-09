@@ -40,9 +40,22 @@ Re 5. routing	When you define the folder public as the staticPath, it will be th
 
 		Load favicon.ico in /guestbook/public  but refer to it with /favicon.ico.  
 
-Re 6. databese	Did a merge of the "user" app on pages 124 to 132 of "Express in action" with the guestbook app of
+Re 6. database	Did a merge of the "user" app on pages 124 to 132 of "Express in action" with the guestbook app of
 		pages 45 to 49 .  Moved the guestbook home page from / to /guestbook. it is in index.ejs.
 		The homepage of the database app is in _index.ejs and must be linked to /
 		You need to move the routers from app.js to routes.js.
 		You also need to read pages 132 to and further, for more modifications
+		Done ! And all code entered.
+		Need to code yourself the lines that are specific for database access (by MYSQL i.s.o. Mongodb/Mongoose)
 		
+		The original code uses Mongoose as an ORM to mongodb. An ORM makes a MODEL, i.e. a mapping between datastuctures in your code 
+		and the database structure.
+
+		Sequelize is an ORM for a.o. Mysql, BUT it needs the Nodejs module mysql2 i.s.o mysql that I use.
+		I tend to decide to skip the MODEL method and use raw Mysql to get and save the user data.
+		Before I start I will look if there is an ORM for mysql. This has the advantage that some other code does not have to be changed!
+	
+		Lets try Sequelize in model/user_mysql.js.  The mongodb version will stay in model/user.js .
+
+
+ 

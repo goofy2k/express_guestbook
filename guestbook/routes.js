@@ -2,7 +2,18 @@
 // you may need to combine thoes with the original routes for the guestbook example
 
 var express = require("express");
-var User = require("./models/user");
+var sequelize = require("sequelize");
+
+//This is the  sequelize / mysql model
+//var User = require("./models/user_mysql");
+//Should use sequelize.import User iso require??? 
+
+var sequelize = new sequelize('nodered_db', 'nodered', 'Nwwnlil12', {host : '127.0.0.1', dialect : 'mysql', pool : {max : 5, min : 0, idle : 10000}});
+
+//var model = sequelize['import'](path.join(__dirname, file));
+var User = sequelize['import']("models/user_mysql.js");
+
+
 var passport = require("passport");
 
 var router = express.Router();
@@ -13,14 +24,25 @@ router.use(function(req, res, next) {
 	res.locals.infos = req.flash("info");
 	next();
 	});
+
+
 router.get("/", function(req, res, next) {
-//	User.find()
+//Sync to create database, if it doesnt exist. You may move this to app.js	
+// User.tryout();
+//	User.sync();
+//	User.prototype.mypre();
+	User.findAll()
 //	.sort({ createdAt: "descending" })
-//	.exec(function(err, users) {
+//	.exec(function(err, users) 
+	{
 //	if (err) { return next(err); }
+//.then(function() {
+//    res.redirect('/');
+
+res.render("_index", {  });
 
 //		res.render("_index", { users: users });
-//		});
+		};
 // render page with dummy result of the query
 res.render("_index", {} );
 	});
@@ -29,32 +51,51 @@ res.render("_index", {} );
 router.get("/signup", function(req, res) {
 res.render("signup");
 });
+
 router.post("/signup", function(req, res, next) {
+//get username and  password from the post
 var username = req.body.username;
 var password = req.body.password;
-User.findOne({ username: username }, function(err, user) {
-if (err) { return next(err); }
-if (user) {
-req.flash("error", "User already exists");
-return res.redirect("/signup");
-}
-var newUser = new User({
-username: username,
-password: password
-});
+console.log("username: "+username+"   password: "+password);
+
+////chek if the  user already exists
+	User.findOne({ where: {username: username }}, function(err, user) {
+		if (err) { return next(err); }
+		if (user) {
+				req.flash("error", "User already exists");
+				return res.redirect("/signup");
+			}
+
+////If user does not exist, create and save new user
+			var newUser = new User	(
+			{
+			username: username,
+			password: password
+			}
+						);
 newUser.save(next);
-});
-}, passport.authenticate("login", {
-successRedirect: "/",
-failureRedirect: "/signup",
-failureFlash: true
-}));
+Console.log("newUser.save(next) reached and done");
+
+								}
+		); 
+//end FindOne
+
+}, //end signup, first parameter
+ 		passport.authenticate("login", 
+						{
+							successRedirect: "/",
+							failureRedirect: "/signup",
+							failureFlash: true
+						}
+					) //end passport.autheticate
+);
 
 router.post("/login", passport.authenticate("login", {
 successRedirect: "/",
 failureRedirect: "/login",
 failureFlash: true
 }));
+
 router.get("/users/:username", function(req, res, next) {
 User.findOne({ username: req.params.username }, function(err, user) {
 if (err) { return next(err); }
