@@ -99,26 +99,24 @@ console.log("username: "+username+"   password: "+password);
 //follow up of signup (sequelize version)
 ////chek if the  user already exists
       User.findOne({ where: {username: username }})
-.then(user =>
-           //   if (user) 
-	   //	      {
-                              req.flash("error", "User already exists"))
-                        //      return res.redirect("/signup");
-          //            }
+	.then(user => 	{
+              		if (user) 
+	   	      		{
+                              	req.flash("error", "User already exists")
+                              	return res.redirect("/signup");
+                      		}
 
 ////If user does not exist, create and save new user
-       //               var newUser = new User  (
-       //               {
-       //               username: username,
-       //               password: password
-       //               }
-       //                                       );
-       //               newUser.save(next);
-       //               Console.log("newUser.save(next) reached and done");
+                      var newUser = new User  (
+                      	{
+                      	username: username,
+                      	password: password
+                      	}
+                                              );
+                      newUser.save(next);
+              		}
 
-       //                                                         }
-
-//)  //end .then
+)  //end .then
         .catch(err => {console.log("ERROR"); return next(err);});
 
 
