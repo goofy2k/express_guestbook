@@ -68,10 +68,6 @@ var User = sequelize['import']("models/user_mysql.js");
 
 
 
-
-
-
-
 setUpPassport();
 
 //new code....
@@ -126,8 +122,10 @@ app.use(routes);
 //response.status(404).render("404");
 //});
 //*** END OF GUESTBOOK ROUTES ***
+
+
 //First sync to create database, if it doesnt exist.
-User.sync();
+//User.sync();
 
 http.createServer(app).listen(3000, function() {
 console.log("Guestbook app started on port 3000.");

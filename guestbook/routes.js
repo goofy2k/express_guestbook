@@ -31,21 +31,15 @@ router.get("/", function(req, res, next) {
 // User.tryout();
 //	User.sync();
 //	User.prototype.mypre();
-	User.findAll()
+	User.findAll().then(res.render("_index", {  }))
+			.catch(error => res.status(400).send(error));
 //	.sort({ createdAt: "descending" })
 //	.exec(function(err, users) 
-	{
+	
 //	if (err) { return next(err); }
 //.then(function() {
 //    res.redirect('/');
-
-res.render("_index", {  });
-
-//		res.render("_index", { users: users });
-		};
-// render page with dummy result of the query
-res.render("_index", {} );
-	});
+});
 
 
 router.get("/signup", function(req, res) {

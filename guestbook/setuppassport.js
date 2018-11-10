@@ -28,33 +28,35 @@ done(err, user);
 var LocalStrategy = require("passport-local").Strategy;
 
 passport.use("login", new LocalStrategy(
- function(username, password, done) {
+   function(username, password, done) {
 //enter MYSQL specific code here
 //not necessary as long as the user_mysql.js model is compatible with the mongo model (user.js)
 
-       User.findOne({ where: {username: username }}, function(err, user) {
+       User.findOne({ where: {username: username } }, function(err, user) {
                 if (err) { return done(err); }
-                if (!user) {
+                if (!user) 	{
 
-return done(null, false,
- { message: "No user has that username!" });
+				return done(null, false, { message: "No user has that username!" });
 
-                        }
+                        	}
 
-}
+	
 
 
-user.checkPassword(password, function(err, isMatch) {
-if (err) { return done(err); }
-if (isMatch) {
-return done(null, user);
-} else {
-return done(null, false,
- { message: "Invalid password." });
-}
+	user.checkPassword(password, function(err, isMatch) {
+		if (err) { return done(err); }
+		if (isMatch) 	{
+				return done(null, user);
+				} 
+			else 
+				{
+				return done(null, false,
+			 	{ message: "Invalid password." });
+				}
 
-});
-});
+								}
+	);
+   }               );
 }));
 
 
