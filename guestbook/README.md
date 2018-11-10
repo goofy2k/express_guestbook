@@ -11,9 +11,9 @@ planning to implement / learn about:
 
 Questions:
 
-Re 1. Git: 	is the config according 'git config --global'  valid for all projects?
-           	how to define e.g. a separate remote repository for an express project or all express projects
-	   	you start a repository with 'git init project-name'. Where in the git status is this name?
+Re 1. Git:	is the config according 'git config --global'  valid for all projects?
+		how to define e.g. a separate remote repository for an express project or all express projects
+		you start a repository with 'git init project-name'. Where in the git status is this name?
 		can you define different repositories for different projects?
 
 		Partial answer: explicitely give the name of the right repository when you upload a commit to github with git push
@@ -24,14 +24,14 @@ Re 2.		See the doc when you do it. You don't use it that often. It works!
 
 Re 3. css	Customisation works, even if the original css is remote (as in the current app.
 		Customize Bootstrap css by creating a custom.css in public/stylesheets
-      		In the view (header.ejs) refer to it as /stylsheets/custom.css  (see 5).
-      		custom.css defines the deltas in the bootstrap_xxx_yyy.css even if you use a remote file.
+		In the view (header.ejs) refer to it as /stylsheets/custom.css  (see 5).
+		custom.css defines the deltas in the bootstrap_xxx_yyy.css even if you use a remote file.
 		Do NOT edit the original css !
 
-      		See: https://uxplanet.org/how-to-customize-bootstrap-b8078a011203 
+		See: https://uxplanet.org/how-to-customize-bootstrap-b8078a011203 
 
 		Consider to use SASS to customize boorstrap css 's . See the above link.
-Re 4. custom  	custom css is in public/stylesheets    editing of stylesheets is complicated. That will be another project!
+Re 4. custom	custom css is in public/stylesheets    editing of stylesheets is complicated. That will be another project!
 
 
 Re 5. routing	When you define the folder public as the staticPath, it will be the root for accessing all static content
@@ -57,5 +57,5 @@ Re 6. database	Did a merge of the "user" app on pages 124 to 132 of "Express in 
 	
 		Lets try Sequelize in model/user_mysql.js.  The mongodb version will stay in model/user.js .
 
-
+		We now have a version where the database contents is successfully rendered to the homepage /  (_index2.ejs) s
  

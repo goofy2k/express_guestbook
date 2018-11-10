@@ -1,15 +1,14 @@
 //these are the routes for the example on page 130
-// you may need to combine thoes with the original routes for the guestbook example
+//you may need to combine those with the original routes for the guestbook example
 
 var express = require("express");
 var sequelize = require("sequelize");
 
 //This is the  sequelize / mysql model
+
 //var User = require("./models/user_mysql");
 //Should use sequelize.import User iso require??? 
-
 var sequelize = new sequelize('nodered_db', 'nodered', 'Nwwnlil12', {host : '127.0.0.1', dialect : 'mysql', pool : {max : 5, min : 0, idle : 10000}});
-
 //var model = sequelize['import'](path.join(__dirname, file));
 var User = sequelize['import']("models/user_mysql.js");
 
@@ -27,15 +26,37 @@ router.use(function(req, res, next) {
 
 
 router.get("/", function(req, res, next) {
-//Sync to create database, if it doesnt exist. You may move this to app.js	
+//Sync to create database, if it doesnt exist. You may move this to app.js
 // User.tryout();
 //	User.sync();
 //	User.prototype.mypre();
-	User.findAll().then(res.render("_index", {  }))
-			.catch(error => res.status(400).send(error));
+//	User.findAll({where: {username: 'John'}, options: [{raw: true}] })
+User.findAll()
+//	.then(res.render("_index2", {users: users} ))
+//sequelize uses a n alias user for users :-(
+
+//   .then(user => {res.render("_index2", {user : user} )})
+//   .then(user => {res.render("_index2", {user : users} )})
+//   .then(user => {res.render("_index2", {users : user} )})   //OK !
+//   .then(user => {res.render("_index2", {users : users} )})
+//   .then(users => {res.render("_index2", {user : user} )})
+//   .then(users => {res.render("_index2", {user : users} )})
+//   .then(users => {res.render("_index2", {users : user} )})
+//   .then(users => {res.render("_index2", {users : users} )}) //OK!
+
+   .then(anyname => {res.render("_index2", {users : anyname} )}) //OK!!!
+
+
+// Data format for transfer of  query result to html template (ejs)
+//.then(queryresult => {res.render("_index2", {html_inputvar : queryresult} )})
+//.then(queryresult => {res.render("_index2", {users : queryresult} )})
+
+
+
+
+	.catch(err => {return next(err);});
 //	.sort({ createdAt: "descending" })
-//	.exec(function(err, users) 
-	
+//	.exec(function(err, users)
 //	if (err) { return next(err); }
 //.then(function() {
 //    res.redirect('/');
@@ -52,27 +73,63 @@ var username = req.body.username;
 var password = req.body.password;
 console.log("username: "+username+"   password: "+password);
 
+//follow up of signup (mongoose version)
 ////chek if the  user already exists
-	User.findOne({ where: {username: username }}, function(err, user) {
-		if (err) { return next(err); }
-		if (user) {
-				req.flash("error", "User already exists");
-				return res.redirect("/signup");
-			}
+//	User.findOne({ where: {username: username }}, function(err, user) {
+//		if (err) { return next(err); }
+//		if (user) {
+//				req.flash("error", "User already exists");
+//				return res.redirect("/signup");
+//			}
 
 ////If user does not exist, create and save new user
-			var newUser = new User	(
-			{
-			username: username,
-			password: password
-			}
-						);
-newUser.save(next);
-Console.log("newUser.save(next) reached and done");
+//			var newUser = new User	(
+//			{
+//			username: username,
+//			password: password
+//			}
+//						);
+//			newUser.save(next);
+//			Console.log("newUser.save(next) reached and done");
 
-								}
-		); 
-//end FindOne
+//								}
+//		); 
+//end findOne (mongoose version)
+
+//follow up of signup (sequelize version)
+////chek if the  user already exists
+      User.findOne({ where: {username: username }})
+.then(user =>
+           //   if (user) 
+	   //	      {
+                              req.flash("error", "User already exists"))
+                        //      return res.redirect("/signup");
+          //            }
+
+////If user does not exist, create and save new user
+       //               var newUser = new User  (
+       //               {
+       //               username: username,
+       //               password: password
+       //               }
+       //                                       );
+       //               newUser.save(next);
+       //               Console.log("newUser.save(next) reached and done");
+
+       //                                                         }
+
+//)  //end .then
+        .catch(err => {console.log("ERROR"); return next(err);});
+
+
+
+                  //                                              }
+              
+//end findOne (sequelize version)
+
+
+
+
 
 }, //end signup, first parameter
  		passport.authenticate("login", 

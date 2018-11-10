@@ -121,11 +121,12 @@ module.exports = (sequelize, DataTypes) => {
   User.sync({force: true}).then(function () {
 /////  // Table created
        return User.create({
-        username: 'John',
+        username: 'Jeff',
         lastName: 'Hancock'
 			  });
-  User.tryout() = function() { 
-  Console.log("User.tryout() in user_mysql.js"); };
+
+//  User.tryout() = function() { 
+//  Console.log("User.tryout() in user_mysql.js"); };
 
 
 });
