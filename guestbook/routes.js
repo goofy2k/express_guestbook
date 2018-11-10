@@ -71,7 +71,7 @@ router.post("/signup", function(req, res, next) {
 //get username and  password from the post
 var username = req.body.username;
 var password = req.body.password;
-console.log("username: "+username+"   password: "+password);
+//console.log("username: "+username+"   password: "+password);
 
 //follow up of signup (mongoose version)
 ////chek if the  user already exists
@@ -99,6 +99,8 @@ console.log("username: "+username+"   password: "+password);
 //follow up of signup (sequelize version)
 ////chek if the  user already exists
       User.findOne({ where: {username: username }})
+      	.catch(err => {return next(err);})
+
 	.then(user => 	{
               		if (user) 
 	   	      		{
@@ -113,30 +115,22 @@ console.log("username: "+username+"   password: "+password);
                       	password: password
                       	}
                                               );
-                      newUser.save(next);
+                        newUser.save(next);
               		}
 
 )  //end .then
-        .catch(err => {console.log("ERROR"); return next(err);});
 
-
-
-                  //                                              }
-              
 //end findOne (sequelize version)
 
 
-
-
-
-}, //end signup, first parameter
+}, //end signup, first middleware parameter
  		passport.authenticate("login", 
 						{
 							successRedirect: "/",
 							failureRedirect: "/signup",
 							failureFlash: true
 						}
-					) //end passport.autheticate
+					) //end passport.authenticate
 );
 
 router.post("/login", passport.authenticate("login", {

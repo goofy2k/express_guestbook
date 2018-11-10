@@ -118,18 +118,15 @@ module.exports = (sequelize, DataTypes) => {
       , bio: 		{ type: DataTypes.STRING(100)}
   	}
 				) 
-  User.sync({force: true}).then(function () {
+//  User.sync({force: true}).then(function () {
 /////  // Table created
-       return User.create({
-        username: 'Jeff',
-        lastName: 'Hancock'
-			  });
-
-//  User.tryout() = function() { 
-//  Console.log("User.tryout() in user_mysql.js"); };
+ //      return User.create({
+ //       username: 'Jeff',
+ //       lastName: 'Hancock'
+//			  });
 
 
-});
+//});
 
 return User;
 
