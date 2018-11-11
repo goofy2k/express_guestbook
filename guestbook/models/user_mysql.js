@@ -109,6 +109,7 @@ var sequelize = new sequelize('nodered_db', 'nodered', 'Nwwnlil12', {host : '127
 //});
 
 module.exports = (sequelize, DataTypes) => {
+
   var User = sequelize.define("user", 	
 	{
         username: 	{ type: DataTypes.STRING(25), required: true, unique: true }
@@ -117,7 +118,46 @@ module.exports = (sequelize, DataTypes) => {
       ,	displayName: 	{ type: DataTypes.STRING(25)}
       , bio: 		{ type: DataTypes.STRING(100)}
   	}
-				) 
+)//end sequelize.define
+
+  var  noop = function() {} ;   //dummy function as parameter for beforeSave.  bcrypt.genSalt (local, not exposed  by the model)
+
+//Now extend the model with a beforeSave hook (method 3  http://docs.sequelizejs.com Hooks /  Declaring hooks
+
+var user = this;
+  //  User.beforeSave ( (user,
+    User.beforeSave (user, done =>  
+
+
+	{ 
+//	var user = this;
+//TEMP	//if (!user.isModified("password")) {return done(); }
+//	if (!user.changed("password")) {return done(); }
+
+	bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
+	if (err) { return done(err); }
+	bcrypt.hash(user.password, salt, noop, function(err, hashedPassword) {
+	if (err) { return done(err); }
+	user.password = hashedPassword;
+//	done();   //done is not a function
+	}); //end bcrypt.hash
+	}); //end bcrypt.genSalt
+} //end done
+); //end User.beforeSave
+
+  User.prototype.checkPassword = function(guess, done ) 
+	{
+	bcrypt.compare(guess, this.password, function(err, isMatch) { done(err, isMatch) } );
+	}; //end User.checkPassword
+
+  User.prototype.name = function () {return this.displayName || this.username};  //this function is called in _index2.ejs  so  there ends at user.name()
+
+
+//define User method  checkPassword DONE
+//define User method  name    AND!!!! change user.name to user.name() in _index2.js DONE
+// do something  with userSchema.pre   have a look at sequelize hooks beforeSave  DONE
+// define function noop  DONE
+// 
 //  User.sync({force: true}).then(function () {
 /////  // Table created
  //      return User.create({
@@ -126,11 +166,16 @@ module.exports = (sequelize, DataTypes) => {
 //			  });
 
 
+
+
+
+
+
 //});
 
 return User;
 
-};
+ }; //end module.exports 
 
 //module.exports =f(sequelize, DataTypes)  {
 //  var User = sequelize.define("user", {

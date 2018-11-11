@@ -139,6 +139,8 @@ failureRedirect: "/login",
 failureFlash: true
 }));
 
+
+//NEED TO CAST findOne in seqelize .then().catch() scheme
 router.get("/users/:username", function(req, res, next) {
 User.findOne({ username: req.params.username }, function(err, user) {
 if (err) { return next(err); }
