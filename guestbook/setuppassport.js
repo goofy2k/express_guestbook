@@ -15,14 +15,8 @@ var User = sequelize['import']("models/user_mysql.js");
 //var User = require("./models/user_mysql"); 
 
 module.exports = function() {
-passport.serializeUser(function(user, done) {
-done(null, user._id);
-});
-passport.deserializeUser(function(id, done) {
-User.findById(id, function(err, user) {
-done(err, user);
-});
-});
+  passport.serializeUser(function(user, done) {done(null, user._id);});
+  passport.deserializeUser(function(id, done) {User.findById(id, function(err, user) {done(err, user); }); });
 };
 
 var LocalStrategy = require("passport-local").Strategy;

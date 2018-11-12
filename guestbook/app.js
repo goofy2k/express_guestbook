@@ -1,5 +1,6 @@
 //var mysql =  require("mysql");
 //NEED TO USE mysql2 for sequelize :-(     
+const util = require("util");
 var mysql2 = require ("mysql2");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -67,8 +68,8 @@ var User = sequelize['import']("models/user_mysql.js");
 //console.log('*****************************************');
 
 
-
-setUpPassport();
+///????
+//setUpPassport();
 
 //new code....
 //app.set("port", process.env.PORT || 3000);
@@ -125,10 +126,13 @@ app.use(routes);
 
 
 //First sync to create database, if it doesnt exist.
-//User.sync();
+User.sync();
 
 http.createServer(app).listen(3000, function() {
 console.log("Guestbook app started on port 3000.");
+//console.log("user_app.js user: " + util.inspect(user, {showHidden: true, depth: 2}));
+console.log("user_app.js User: " + util.inspect(User, {showHidden: true, depth: 2}));
+
 //new code to replace the two  lines above???
 //app.listen(app.get("port"), function() {
 //console.log("Server started on port " + app.get("port"));

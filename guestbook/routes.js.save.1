@@ -99,33 +99,29 @@ var password = req.body.password;
 //follow up of signup (sequelize version)
 ////chek if the  user already exists
       User.findOne({ where: {username: username }})
+      	.catch(err => {return next(err);})
 
-        .then(user =>   {
-                        if (user)
-                                {
-                                req.flash("error", "User already exists")
-                                return res.redirect("/signup");
-                                }
+	.then(user => 	{
+              		if (user) 
+	   	      		{
+                              	req.flash("error", "User already exists")
+                              	return res.redirect("/signup");
+                      		}
 
 ////If user does not exist, create and save new user
                       var newUser = new User  (
-                        {
-                        username: username,
-                        password: password
-                        }
+                      	{
+                      	username: username,
+                      	password: password
+                      	}
                                               );
-                        console.log("newUser.save reached");
-                        newUser.save(next);
+			console.log("newUser.save reached");
+                        newUser.save(next);  //call also beforeSave
                         console.log("newUser.save passed");
 next(); //dummy next
-                        }
+              		}
 
 )  //end .then
-
-
-
-      	.catch(err => {return next(err);})
-
 
 //end findOne (sequelize version)
 
@@ -134,7 +130,7 @@ next(); //dummy next
 
 //second middleware for debugging purposes
 function (req,res,next) {
-console.log("debugging /login route BETWEEN newUSer.save and passport.authenticate");
+console.log("debugging /login route");
 next();
 },
 
