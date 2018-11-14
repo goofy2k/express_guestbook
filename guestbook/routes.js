@@ -138,7 +138,7 @@ console.log("debugging /login route BETWEEN newUSer.save and passport.authentica
 next();
 },
 
- 		passport.authenticate("login", 
+ 		passport.authenticate("local", 
 						{
 							successRedirect: "/",
 							failureRedirect: "/signup",
@@ -147,7 +147,7 @@ next();
 					) //end passport.authenticate
 );
 
-router.post("/login", passport.authenticate("login", {
+router.post("/login", passport.authenticate("local", {
 successRedirect: "/",
 failureRedirect: "/login",
 failureFlash: true
@@ -229,11 +229,6 @@ router.use(function(request, response) {
 response.status(404).render("404");
 });
 //*** END OF GUESTBOOK ROUTES ***
-
-
-
-
-
 
 
 

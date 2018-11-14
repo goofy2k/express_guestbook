@@ -7,6 +7,7 @@ var session = require("express-session");
 var passport = require("passport");
 var flash = require("connect-flash");
 var sequelize = require("sequelize");
+var morgan = require('morgan');
 //to enable  creation of the db  before the server starts, use import iso require!!!!
 //var User = require("./models/user_mysql");
 //var model = sequelize['import'](path.join(__dirname, file));
@@ -28,6 +29,11 @@ var logger = require("morgan");
 var bodyParser = require("body-parser");
 var app = express();
 app.use(express.static(staticPath));
+app.use(morgan('dev', {
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
+
+
 
 //connects to your mysql server and express_test
 // code here
