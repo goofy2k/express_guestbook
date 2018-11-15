@@ -10,56 +10,20 @@ var User = sequelize['import']("models/user_mysql.js");
 
 	passport.serializeUser	(function(user, done) 	{
 		console.log("passport.serializeUser: "+user.id );
-		done(null, user.id);  //replaced user._id by user.id   removes a an error on serialize. But what happens?
+		done(null, user.id);  //replaced user._id by user.id   removes a an erro on serialize. But what happens?
 							}
 				);
 
 
-passport.deserializeUser(function(id, done) {
-    User.findOne({ // Using sequelize model functoin
-        where: {
-            'id': id
-        }
-    }).then(function (user) {
-        if (user == null) {
-            done(new Error('Wrong user id.'))
-        }
+  	passport.deserializeUser	(function(id, done) 	{
+		console.log("passport.deserializeUser");
 
-        done(null, user) // Standerd deserailize callback
-    })
-});
-
-
-
-
-
-
-
-//  	passport.deserializeUser	(function(id, done) 	{
-//		console.log("passport.deserializeUser");
-
-/////THE NEXT FIND IS SEQEULIZE !!!! CONVERT TO .then().catch().......!!!!!!!!!!!!
-/////		User.findByPk(id, function(err, user) 		{    //findById replaced by  findByPk
-/////               		console.log("passport.deserializeUser passed User.findByPk inside  "+ user.id);
-/////			done(err, user); 			}
-/////					); 
-
-//                User.findByPk(id)
-//			.then	( function(user)  	{    //findById replaced by  findByPk
-//				if (user) {done(user.get()); }
-//else {done(user.errors,null);}
-
-//                        	console.log("passport.deserializeUser passed User.findByPk inside  "+ user.id);
-  //                      	return;// //user;
-//					}
-//				)
-//.catch	(err => { return done(err)} );
-//console.log("deserialize END******");
-//            }
-// )
-//;
-
-
+//THE NEXT FIND IS SEQEULIZE !!!! CONVERT TO .next().catch().......!!!!!!!!!!!!
+		User.findByPk(id, function(err, user) 		{    //findById replaced by  findByPk
+               		console.log("passport.deserializeUser passed User.findByPk inside  "+ user.id);
+			done(err, user); 			}
+					); 
+						});
 
 
 var LocalStrategy = require("passport-local").Strategy;

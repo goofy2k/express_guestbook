@@ -80,12 +80,12 @@ var progress = function progress() {};
 var noop = function() {};
 
 
-User.hook("beforeSave",  async function(user)  	{
+User.hook("beforeSave",  async function(user,done)  	{
 
       	console.log("User.hook('beforeSave' called");
       	console.log ("username: "+user.username + "   password: "+user.password);
 
-	if (!user.changed("password")) {return done(); }
+	if (!user.changed("password")) {return done; }
 
 	console.log("beforeSave: user password did not change. Now going to generate SALT");
 
