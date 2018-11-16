@@ -1,3 +1,10 @@
 <% include _header %>
 <h1>DEBUG</h1>
-<% include _footer %>
+<h3>
+
+
+<% Session("username")="Donald Duck" Session("age")=50 <%=currentUser%></h3>
+
+<% include _footer %> dim i For Each i in Session.Contents
+  Response.Write(i & "<br>") Next
+%>

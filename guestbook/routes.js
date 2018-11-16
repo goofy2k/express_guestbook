@@ -25,6 +25,7 @@ router.use(function(req, res, next) {
 	});
 
 
+
 router.get("/", function(req, res, next) {
 //Sync to create database, if it doesnt exist. You may move this to app.js
 // User.tryout();
@@ -65,6 +66,9 @@ User.findAll()
 
 router.get("/signup", function(req, res) {
 res.render("signup");
+});
+
+router.get("/debug", function(req, res) {res.render("debug");
 });
 
 router.post("/signup", function(req, res, next) {
@@ -162,11 +166,13 @@ failureFlash: true
 //res.render("profile", { user: user });
 //});
 //});
-
 // the /users/:username route contains  a colon :  Is this because username is a variable part of the url?
-router.get("/users/:username"), function(req, res, next) {
+
+router.get("/users/:user.username"), function(req, res, next) {
+console.log("ROUTES /users/username: username: " + username);
 User.findOne({ username: req.params.username })
-.catch(err => {return next(err); })
+.catch(err => {console.log("ROUTES /users/username: username: " + username);
+return next(err); })
 .then(user => { console.log("ROUTES /users/username: username: " + username);
 
 		if (!user) { 

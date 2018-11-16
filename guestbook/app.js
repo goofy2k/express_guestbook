@@ -1,3 +1,7 @@
+var express = require("express");
+var app = express();
+var debug = require('express-debug');
+
 //var mysql =  require("mysql");
 //NEED TO USE mysql2 for sequelize :-(     
 const util = require("util");
@@ -19,15 +23,12 @@ var routes = require("./routes");
 var http = require("http");
 var path = require("path");
 var setUpPassport = require("./setuppassport");
-var express = require("express");
 //staticPath is the root for all static content
 //browser, views etc should refer to / for content in the folder public
 //and to /subfolder for content in the folder public/subfolder etc. etc. 
 var staticPath = path.join(__dirname, "public");
-
 var logger = require("morgan");
 var bodyParser = require("body-parser");
-var app = express();
 app.use(express.static(staticPath));
 app.use(morgan('dev', {
   skip: function (req, res) { return res.statusCode < 400 }
@@ -133,7 +134,7 @@ app.use(routes);
 
 //First sync to create database, if it doesnt exist.
 User.sync();
-
+debug(app, {});
 http.createServer(app).listen(3000, function() {
 console.log("Guestbook app started on port 3000.");
 //console.log("user_app.js user: " + util.inspect(user, {showHidden: true, depth: 2}));
