@@ -63,6 +63,7 @@ User.findAll()
 //    res.redirect('/');
 });
 
+router.get("/users1/:username", function(req, res){ res.render("debug"); });
 
 router.get("/signup", function(req, res) {
 res.render("signup");
@@ -168,20 +169,24 @@ failureFlash: true
 //});
 // the /users/:username route contains  a colon :  Is this because username is a variable part of the url?
 
-router.get("/users/:user.username"), function(req, res, next) {
-console.log("ROUTES /users/username: username: " + username);
-User.findOne({ username: req.params.username })
-.catch(err => {console.log("ROUTES /users/username: username: " + username);
+
+router.get("/users/:username", function(req, res, next) {
+//console.log("ROUTES /users/username: username: " + username);
+User.findOne({where :{ username: req.params.username} })
+.catch(err => {
+//console.log("ROUTES /users/username: username: " + req.params.username);
 return next(err); })
-.then(user => { console.log("ROUTES /users/username: username: " + username);
+.then(user => { 
+//console.log("ROUTES /users/username: username: " + req.params.username);
 
 		if (!user) { 
-			console.log("router.get('users... HITS (!user)");
-			return next(404); }
-		console.log("router.get('users... HITS res.render)");
-		res.render("profile", { user: user });
+	//		console.log("router.get('users... HITS (!user)");
+			return next(); }
+	//	console.log("router.get('users... HITS res.render)");
+		res.render("profile", {user:user});
+//res.render("debug");
 		});
-};
+});
 
 
 
