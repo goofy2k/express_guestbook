@@ -1,8 +1,9 @@
 var express = require("express");
 var app = express();
 var debug = require('express-debug');
-var configurations = require('./conf/keys.json');
 
+console.log("reading app configurations from conf/keys.json");
+var configurations = require('./conf/keys.json');
 var serverPort = configurations.server.port;
 //console.log(configurations);
 
@@ -53,14 +54,12 @@ app.use(morgan('dev', {
 //mongoose.connect("mongodb://localhost:27017/test");
 //mariadb dialect not supported in this version of sequelize
 //later , test if this  init of sequelize can  be  omitted it is also in user_mysql.js
-console.log(configurations);
 var dbName = configurations.db.dbname;
 var dbHost = configurations.db.host;
 var dbPort = configurations.db.port;
 var dbPass = configurations.db.password;
 var dbUser = configurations.db.username;
-
-console.log(configurations);
+//console.log(configurations);
 
 var sequelize = new sequelize(dbName, dbUser, dbPass, {host : dbHost, dialect : 'mysql', pool : {max : 5, min : 0, idle : 10000}
 });
