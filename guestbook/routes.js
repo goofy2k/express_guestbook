@@ -262,10 +262,5 @@ response.status(404).render("404");
 });
 //*** END OF GUESTBOOK ROUTES ***
 
-
-
 module.exports = router;
-
-
-//rendering needs a  user with : name, username, bio
 

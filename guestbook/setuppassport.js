@@ -30,15 +30,10 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-
-
-
-
-
 //  	passport.deserializeUser	(function(id, done) 	{
 //		console.log("passport.deserializeUser");
 
-/////THE NEXT FIND IS SEQEULIZE !!!! CONVERT TO .then().catch().......!!!!!!!!!!!!
+/////THE NEXT FIND IS SEQUELIZE !!!! CONVERT TO .then().catch().......!!!!!!!!!!!!
 /////		User.findByPk(id, function(err, user) 		{    //findById replaced by  findByPk
 /////               		console.log("passport.deserializeUser passed User.findByPk inside  "+ user.id);
 /////			done(err, user); 			}
@@ -58,9 +53,6 @@ passport.deserializeUser(function(id, done) {
 //            }
 // )
 //;
-
-
-
 
 var LocalStrategy = require("passport-local").Strategy;
 
