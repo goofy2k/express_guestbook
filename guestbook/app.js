@@ -1,6 +1,10 @@
 var express = require("express");
 var app = express();
 var debug = require('express-debug');
+var configurations = require('./conf/keys.json');
+
+var serverPort = configurations.server.port;
+//console.log(configurations);
 
 //var mysql =  require("mysql");
 //NEED TO USE mysql2 for sequelize :-(     
@@ -49,7 +53,16 @@ app.use(morgan('dev', {
 //mongoose.connect("mongodb://localhost:27017/test");
 //mariadb dialect not supported in this version of sequelize
 //later , test if this  init of sequelize can  be  omitted it is also in user_mysql.js
-var sequelize = new sequelize('nodered_db', 'nodered', 'Nwwnlil12', {host : '127.0.0.1', dialect : 'mysql', pool : {max : 5, min : 0, idle : 10000}
+console.log(configurations);
+var dbName = configurations.db.dbname;
+var dbHost = configurations.db.host;
+var dbPort = configurations.db.port;
+var dbPass = configurations.db.password;
+var dbUser = configurations.db.username;
+
+console.log(configurations);
+
+var sequelize = new sequelize(dbName, dbUser, dbPass, {host : dbHost, dialect : 'mysql', pool : {max : 5, min : 0, idle : 10000}
 });
 
 //var model = sequelize['import'](path.join(__dirname, file));
@@ -91,9 +104,10 @@ app.use(logger("dev"));
 //***** Uses four middlewares *****
 app.use(bodyParser.urlencoded({ extended: false }));
 //new code
+var appSecret = configurations.app.secret;
 app.use(cookieParser());
 app.use(session({
-secret: "TKRv0IJs=HYqrvagQ#&!F!%V]Ww/4KiVs$s,<<MX",
+secret: appSecret,
 resave: true,
 saveUninitialized: true
 }));
@@ -135,8 +149,8 @@ app.use(routes);
 //First sync to create database, if it doesnt exist.
 User.sync();
 debug(app, {});
-http.createServer(app).listen(3000, function() {
-console.log("Guestbook app started on port 3000.");
+http.createServer(app).listen(serverPort, function() {
+console.log("Guestbook app started on port ",serverPort);
 //console.log("user_app.js user: " + util.inspect(user, {showHidden: true, depth: 2}));
 console.log("user_app.js User: " + util.inspect(User, {showHidden: true, depth: 2}));
 

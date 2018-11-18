@@ -1,0 +1,22 @@
+
+
+IK
+
+
+router.get("/", function(req, res, next) {
+User.findAll()
+        .then(res.render("_index2", {users: users} )) 
+        .catch(err => {console.log("ERROR"); return next(err);});
+});
+
+
+janmeier
+
+.then(users => res.render("_index2", {users: users} ))
+
+The code you have now executes render before findAll returns
+Your code executes render immediately, while mine executes it in a callback
+
+
+
+look at await / sync

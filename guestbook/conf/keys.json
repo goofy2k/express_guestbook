@@ -1,0 +1,14 @@
+{
+"db": {
+"dbname": "nodered_db",
+"host": "127.0.0.1",
+"port": 27017,
+"username": "nodered",
+"password": "Nwwnlil12"
+},
+"app": {
+"secret": "TKRv0IJs=HYqrvagQ#&!F!%V]Ww/4KiVs$s,<<MX"
+},
+"server": {
+"port": 3000}
+}

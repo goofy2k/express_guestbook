@@ -8,6 +8,7 @@ planning to implement / learn about:
 4. using local custom.css with deltas from the original bootstrap css
 5. location of css and access with the Express routers 
 6. use of database (mysql as mongo installation still does not work on Raspbian Stretch)
+7. store secrets and config in a separate file that is not stored in github
 
 Questions:
 
@@ -58,4 +59,14 @@ Re 6. database	Did a merge of the "user" app on pages 124 to 132 of "Express in 
 		Lets try Sequelize in model/user_mysql.js.  The mongodb version will stay in model/user.js .
 
 		We now have a version where the database contents is successfully rendered to the homepage /  (_index2.ejs) s
+        
+        The app now works. Next step is to consolidate the work.
+        
+Re 7.   See: Azat Mardan, Pro Express.js , p. 164   Use a keys.json file
+
+        The latest versions of Node.js allow developers to import JSON files with the require() function. Hurray for not
+messing around with the fs module! Therefore, the main application file might use these statements:
+var configurations = require('/conf/keys.json');
+var twitterConsumerKey = configurations.twitter.consumer_key;
+ 
  
