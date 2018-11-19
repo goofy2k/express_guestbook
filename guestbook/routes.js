@@ -3,7 +3,7 @@
 
 var express = require("express");
 var sequelize = require("sequelize");
-
+var app = express(); //for app.edit...
 //This is the  sequelize / mysql model
 
 //var User = require("./models/user_mysql");
@@ -256,6 +256,33 @@ entries.push({
         });
 response.redirect("/guestbook");
 });
+
+
+router.get('/eventstream', (req, res, next) => {
+    res.set({
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+    });
+    app.on('message', data => {
+        res.write(`event: message\n`);
+        res.write(`data: ${JSON.stringify(data)}\n\n`);
+    });
+});
+
+router.post('/message', (req, res, next) => {
+    const message = req.body.message;
+    // ...
+    // Some code here to handle the message, 
+        // by saving it in a database for instance
+    // ...
+    app.emit('message', { 
+        title: 'New message!',
+                message,
+                timestamp: new Date() 
+        });
+})
+
 
 router.use(function(request, response) {
 response.status(404).render("404");

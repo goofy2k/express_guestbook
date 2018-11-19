@@ -25,7 +25,7 @@ var morgan = require('morgan');
 
 //puts all of your routes in another file
 var routes = require("./routes");
-
+//var sse_routes = require("./sse_routes");
 var http = require("http");
 var path = require("path");
 var setUpPassport = require("./setuppassport");
@@ -80,6 +80,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(routes);
+//app.use(sse_routes);
 
 //First sync to create database, if it doesnt exist.
 User.sync();
